@@ -1,13 +1,17 @@
 #! /bin/bash
 
 #Install Paru
-echo "Installing Paru"
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-cd ..
-
+package=paru
+if pacman -Qs $package >/dev/null; then
+	echo "Paru is already installed"
+else
+	echo "Installing Paru"
+	sudo pacman -S --needed base-devel
+	git clone https://aur.archlinux.org/paru.git
+	cd paru
+	makepkg -si
+	cd ..
+fi
 #install all the packages needed
 echo "Installing Packages"
 paru -S xorg-server vim xorg-xinit xorg-xrandr xorg-xsetroot librewolf-bin nitrogen picom neovim lazygit git fzf fd ripgrep eza bat zoxide thefuck starship zsh-autosuggestions zsh-syntax-highlighting rofi zsh reflector xclip keyd
@@ -77,3 +81,4 @@ chsh -s /bin/zsh
 
 echo "Done! Reboot and try"
 echo "Edit xinitrc to updated for xrandr"
+echo "Edit /etc/keyd/default.conf to match keyboard"

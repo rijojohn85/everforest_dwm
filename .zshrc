@@ -13,7 +13,7 @@ compinit
 # End of lines added by compinstall
 # fzf
 # ---- FZF -----
-
+export PATH="$HOME/.cargo/bin:$PATH"
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
 

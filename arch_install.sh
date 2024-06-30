@@ -69,10 +69,11 @@ else
 	mkdir "${BIN_DIR}"
   cp ./startdwm "${ BIN_DIR }"
 fi
-
+cargo install rsblocks
 
 echo "Edit xinitrc to updated for xrandr"
 
 chsh -s /bin/zsh
 
 echo "Done! Reboot and try"
+echo "Edit xinitrc to updated for xrandr"

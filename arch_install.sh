@@ -14,12 +14,12 @@ paru -S xorg-server vim xorg-xinit xorg-xrandr xorg-xsetroot librewolf-bin nitro
 
 # check if font directory exits and copy fonts to it
 echo "Copying Fonts"
-FONT_DIRECTORY=~/.local/share/fonts/
-if [ -d "${ FONT_DIRECTORY }" ]; then
-	cp -v ./SFMono-Nerd-Font-Ligaturized/*.otf "${ FONT_DIRECTORY }"
+FONT_DIRECTORY=$HOME/.local/share/fonts
+if [ -d "${FONT_DIRECTORY}" ]; then
+	cp -v ./SFMono-Nerd-Font-Ligaturized/*.otf "${FONT_DIRECTORY}"
 else
-	mkdir -pv "$FONT_DIRECTORY"
-	cp -v ./SFMono-Nerd-Font-Ligaturized/*.otf "${ FONT_DIRECTORY }"
+	mkdir -pv "${FONT_DIRECTORY}"
+	cp -v ./SFMono-Nerd-Font-Ligaturized/*.otf "${FONT_DIRECTORY}"
 fi
 #refresh font cache
 fc-cache
@@ -40,12 +40,12 @@ cd ..
 #
 #check if config directory exists and copy configs there
 echo "Copying Configs"
-CONFIG_DIRECTORY=~/.config/
-if [ -d "${ CONFIG_DIRECTORY }" ]; then
-	cp -r ./.config/* "${ CONFIG_DIRECTORY }"
+CONFIG_DIRECTORY=$HOME/.config/
+if [ -d "${CONFIG_DIRECTORY}" ]; then
+	cp -r ./.config/* "${CONFIG_DIRECTORY}"
 else
-	mkdir "${ CONFIG_DIRECTORY }"
-	cp -r ./.config/* "${ CONFIG_DIRECTORY }"
+	mkdir "${CONFIG_DIRECTORY}"
+	cp -r ./.config/* "${CONFIG_DIRECTORY}"
 fi
 
 #initialing and starting keyd
@@ -63,11 +63,11 @@ chown -c root /etc/keyd/default.conf
 sudo keyd reload
 
 BIN_DIR=~/bin/
-if [ -d "${ BIN_DIR }" ]; then
-  cp ./startdwm "${ BIN_DIR }"
+if [ -d "${BIN_DIR}" ]; then
+	cp ./startdwm "${BIN_DIR}"
 else
 	mkdir "${BIN_DIR}"
-  cp ./startdwm "${ BIN_DIR }"
+	cp ./startdwm "${BIN_DIR}"
 fi
 cargo install rsblocks
 

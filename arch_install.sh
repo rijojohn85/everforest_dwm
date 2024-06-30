@@ -75,4 +75,4 @@ echo "Edit xinitrc to updated for xrandr"
 
 chsh -s /bin/zsh
 
-echo "Done!"
+echo "Done! Reboot and try"

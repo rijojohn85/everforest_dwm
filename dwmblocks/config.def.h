@@ -13,7 +13,7 @@
    defined in colors array in dwm's config.h and so on.
  * If you wish to change DELIMITERENDCHAR, don't forget to update its value in
    dwm.c and color codes in your pathu programs. */
-#define DELIMITERENDCHAR 2
+#define DELIMITERENDCHAR 0
 
 /* delimiter specified as an array of characters
  * (don't remove DELIMITERENDCHAR at the end) */

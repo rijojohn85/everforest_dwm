@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # (for pipewire users)
 # This script parses the output of `pactl list sinks' to find volume and mute
 # status of the default audio sink and whether headphones are plugged in or not

@@ -1,19 +1,120 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd
-bindkey -v
+HISTSIZE=10000
+SAVEHIST=10000
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/rijojohn/.zshrc'
+zstyle :compinstall filename '~/.zshrc'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
+###################################
+#     Plugins 
+###################################
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
+###################################
+#      exclusive settings
+###################################
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# language and unicode
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# Editor
+export EDITOR=nvim
+export VISUAL=nvim
+
+## Editing command line in vim
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -M  vicmd v edit-command-line
+
+# Keybindings
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+bindkey  "^[[3~"  delete-char
+
+###################################
+#    Exporting Paths
+###################################
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.emacs.d/bin:$PATH"
+
+alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
+alias knvim="NVIM_APPNAME=knvim nvim"
+alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+alias rvim="NVIM_APPNAME=RustVim nvim"
+alias pyvim="NVIM_APPNAME=PyVim nvim"
+
+function nvims() {
+  items=("default" "knvim" "LazyVim" "RustVim" "PyVim" "NvChad" "AstroNvim")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+###################################
+#     Aliases
+###################################
+
+## Universal
+alias iconfig="nvim ~/.config/i3/config"
+alias qconfig="nvim ~/.config/qtile/config.py"
+alias polyconfig="nvim ~/.config/polybar/config.ini"
+alias piconfig="nvim ~/.config/picom/picom.conf"
+alias alconfig="nvim ~/.config/alacritty/alacritty.toml"
+alias kitconfig="nvim ~/.config/kitty/kitty.conf"
+alias wezconfig="nvim ~/.config/wezterm/wezterm.lua"
+alias vv="nvim"
+alias dv="devour"
+alias open="devour pcmanfm"
+alias ss="ranger ~/Pictures/screenshots"
+alias neodir="cd ~/.config/nvim"
+alias DS="cd ~/Desktop/DS"
+alias bsource="source .bashrc"
+alias xx="exit"
+alias cc="clear"
+alias ai="tgpt"
+alias cd="z"
+alias ipaddr="ip -o route get to 9.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p'"
+
+## Arch
+alias up="paru -Syyu"
+alias ref="paru -Syy"
+alias search="paru -Ss"
+alias pacs="paru -Q | wc -l"
+alias list="paru -Q"
+alias aur_list="paru -Qm"
+
+###################################
+#         Tmux
+###################################
+alias tnew="tmux new -s"
+alias tls="tmux ls"
+alias trename="tmux rename-session -t"
+alias ta="tmux a -t"
+
+# Starship prompt
+eval "$(starship init zsh)"
+
+source ~/alias
 # fzf
 # ---- FZF -----
-export PATH="$HOME/.cargo/bin:$PATH"
+
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
 
@@ -34,14 +135,6 @@ _fzf_compgen_path() {
 _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
-
-# --- setup fzf theme ---
-fg="#CBE0F0"
-bg="#011628"
-bg_highlight="#143652"
-purple="#B388FF"
-blue="#06BCE4"
-cyan="#2CF9ED"
 
 export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan}"
 
@@ -71,8 +164,4 @@ eval $(thefuck --alias fk)
 
 eval "$(zoxide init zsh)"
 
-source ~/.config/zsh/alias
 eval "$(starship init zsh)"
-
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -34,7 +34,24 @@ _fzf_compgen_path() {
 _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
+alias nvim="NVIM_APPNAME=LazyVim nvim"
+alias nvim-kick="NVIM_APPNAME=kickstart nvim"
+alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+alias rvim="NVIM_APPNAME=RustVim nvim"
+alias pyvim="NVIM_APPNAME=PyVim nvim"
 
+function nvims() {
+  items=("default" "kickstart" "nvim" "RustVim" "PyVim" "NvChad" "AstroNvim")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
 # --- setup fzf theme ---
 fg="#CBE0F0"
 bg="#011628"
@@ -76,3 +93,4 @@ eval "$(starship init zsh)"
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+alias type="tt -n 20 -g 10 --notheme"

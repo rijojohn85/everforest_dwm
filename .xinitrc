@@ -41,7 +41,7 @@ fi
 #Display Resolution
 xrandr --output HDMI-2 --primary --mode 1920x1080 --output HDMI-1 --mode 1920x1080 --rotate right --right-of HDMI-2 &
 while true; do
-	xsetroot -name "$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p') | $(date +"%e-%b-%g %R")"
+  xsetroot -name "󰱓 $(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p') |  $(date +"%e-%b-%g %R")"
   sleep 60s
 done &
 #Compositor

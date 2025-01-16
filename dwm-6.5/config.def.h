@@ -60,7 +60,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask
+#define MODKEY Mod1Mask
 #define TAGKEYS(KEY, TAG)                                                      \
   {MODKEY, KEY, view, {.ui = 1 << TAG}},                                       \
       {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},               \
@@ -80,7 +80,7 @@ static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
-static const char *browsercmd[] = {"librewolf", NULL};
+static const char *browsercmd[] = {"firefox", NULL};
 static const char *zathuracmd[] = {"zathura", NULL};
 
 static const Key keys[] = {
@@ -88,7 +88,7 @@ static const Key keys[] = {
 
     {MODKEY, XK_a, spawn,
      SHCMD("rofi -show drun -disable-history -show-icons")},
-    {MODKEY | ShiftMask, XK_p, spawn, SHCMD("~/.config/i3/scripts/power.sh")},
+    {Mod4Mask | ShiftMask, XK_p, spawn, SHCMD("~/.config/i3/scripts/power.sh")},
     {MODKEY, XK_w, spawn, {.v = browsercmd}},
     {MODKEY, XK_o, spawn, {.v = zathuracmd}},
     {MODKEY, XK_F11, spawn, {.v = downvol}},
@@ -112,10 +112,10 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
     {MODKEY, XK_0, view, {.ui = ~0}},
     {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
-    {MODKEY, XK_comma, focusmon, {.i = -1}},
-    {MODKEY, XK_period, focusmon, {.i = +1}},
-    {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
-    {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
+    {MODKEY, XK_n, focusmon, {.i = -1}},
+    {MODKEY, XK_p, focusmon, {.i = +1}},
+    {MODKEY | ShiftMask, XK_n, tagmon, {.i = -1}},
+    {MODKEY | ShiftMask, XK_p, tagmon, {.i = +1}},
     {MODKEY, XK_minus, setgaps, {.i = -1}},
     {MODKEY, XK_equal, setgaps, {.i = +1}},
     {MODKEY | ShiftMask, XK_equal, setgaps, {.i = 0}},

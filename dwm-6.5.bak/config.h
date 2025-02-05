@@ -1,7 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
+#define FORCE_VSPLIT                                                           \
+  1 /* nrowgrid layout: force two clients to always split vertically */
+#include "vanitygaps.c"
 /* appearance */
-static const unsigned int borderpx = 1; /* border pixel of windows */
+static const unsigned int borderpx = 0; /* border pixel of windows */
+static const unsigned int gappx = 15;   /* gaps between windows */
 static const unsigned int snap = 32;    /* snap pixel */
 static const unsigned int gappih = 20;  /* horiz inner gap between windows */
 static const unsigned int gappiv = 10;  /* vert inner gap between windows */
@@ -32,6 +36,7 @@ static const char *colors[][3] = {
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
     [SchemeSel] = {col_gray4, col_cyan, col_cyan},
 };
+
 /* tagging */
 static const char *tags[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
@@ -52,7 +57,6 @@ static const int resizehints =
     1; /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen =
     1; /* 1 will force focus on the fullscreen window */
-
 static const char *mutecmd[] = {"amixer", "-q",     "set",
                                 "Master", "toggle", NULL};
 static const char *volupcmd[] = {"amixer", "-q",     "set", "Master",
@@ -66,14 +70,11 @@ static const char *medplaypausecmd[] = {"playerctl", "play-pause", NULL};
 static const char *mednextcmd[] = {"playerctl", "next", NULL};
 static const char *medprevcmd[] = {"playerctl", "previous", NULL};
 
-#define FORCE_VSPLIT                                                           \
-  1 /* nrowgrid layout: force two clients to always split vertically */
-#include "vanitygaps.c"
-
 static const Layout layouts[] = {
     /* symbol     arrange function */
     {"[]=", tile}, /* first entry is default */
     {"[M]", monocle},
+
     {"[@]", spiral},
     {"[\\]", dwindle},
     {"H[]", deck},
@@ -112,8 +113,10 @@ static const char *dmenucmd[] = {
 static const char *termcmd[] = {"st", NULL};
 static const char *browsercmd[] = {"firefox", NULL};
 static const char *zathuracmd[] = {"zathura", NULL};
+
 static const Key keys[] = {
     /* modifier                     key        function        argument */
+
     {MODKEY, XK_a, spawn,
      SHCMD("${HOME}/.config/rofi/launchers/type-4/launcher.sh")},
     {Mod4Mask | ShiftMask, XK_p, spawn,
@@ -134,7 +137,29 @@ static const Key keys[] = {
     {MODKEY, XK_d, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
+    {MODKEY | ShiftMask, XK_Return, zoom, {0}},
+    {MODKEY, XK_Tab, view, {0}},
     {MODKEY, XK_q, killclient, {0}},
+    {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
+    {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
+    {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XK_u, setlayout, {.v = &layouts[3]}},
+    {MODKEY, XK_o, setlayout, {.v = &layouts[4]}},
+    {MODKEY, XK_space, setlayout, {0}},
+    {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
+    {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
+    {MODKEY, XK_0, view, {.ui = ~0}},
+    {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
+    {MODKEY, XK_n, focusmon, {.i = -1}},
+    {MODKEY, XK_p, focusmon, {.i = +1}},
+    {MODKEY | ShiftMask, XK_n, tagmon, {.i = -1}},
+    {MODKEY | ShiftMask, XK_p, tagmon, {.i = +1}},
+    {MODKEY, XK_minus, setgaps, {.i = -1}},
+    {MODKEY, XK_equal, setgaps, {.i = +1}},
+    {MODKEY | ShiftMask, XK_equal, setgaps, {.i = 0}},
+    TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
+        TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
+            TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_r, quit, {0}},
     {MODKEY | ShiftMask, XK_h, setcfact, {.f = +0.25}},
     {MODKEY | ShiftMask, XK_l, setcfact, {.f = -0.25}},
     {MODKEY | ShiftMask, XK_o, setcfact, {.f = 0.00}},
@@ -154,23 +179,6 @@ static const Key keys[] = {
     {MODKEY | Mod4Mask | ShiftMask, XK_9, incrovgaps, {.i = -1}},
     {MODKEY | Mod4Mask, XK_0, togglegaps, {0}},
     {MODKEY | Mod4Mask | ShiftMask, XK_0, defaultgaps, {0}},
-    {MODKEY, XK_Tab, view, {0}},
-    {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
-    {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
-    {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
-    {MODKEY, XK_u, setlayout, {.v = &layouts[11]}},
-    {MODKEY, XK_space, setlayout, {0}},
-    {MODKEY, XK_s, swap_master, {0}},
-    {MODKEY | ShiftMask, XK_space, rotate_layout, {0}},
-    {MODKEY, XK_0, view, {.ui = ~0}},
-    {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
-    {MODKEY, XK_comma, focusmon, {.i = -1}},
-    {MODKEY, XK_period, focusmon, {.i = +1}},
-    {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
-    {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
-    TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
-        TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
-            TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
 };
 
 /* button definitions */

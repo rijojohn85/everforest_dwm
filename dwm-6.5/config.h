@@ -109,16 +109,17 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
-static const char *termcmd[] = {"st", NULL};
+static const char *termcmd[] = {"alacritty", NULL};
 static const char *browsercmd[] = {"firefox", NULL};
 static const char *zathuracmd[] = {"zathura", NULL};
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_a, spawn,
-     SHCMD("${HOME}/.config/rofi/launchers/type-4/launcher.sh")},
-    {Mod4Mask | ShiftMask, XK_p, spawn,
-     SHCMD("~/.config/rofi/powermenu/type-6/powermenu.sh")},
+     SHCMD("rofi -show drun")},
+    { Mod4Mask|ShiftMask, XK_p, spawn, SHCMD("~/.local/bin/dwm_logout.sh") },
     {MODKEY, XK_w, spawn, {.v = browsercmd}},
+
+    { Mod4Mask|ShiftMask, XK_s, spawn, SHCMD("flameshot gui") },
     {MODKEY, XK_o, spawn, {.v = zathuracmd}},
     {MODKEY, XK_F11, spawn, {.v = voldowncmd}},
     {MODKEY, XK_F10, spawn, {.v = mutecmd}},

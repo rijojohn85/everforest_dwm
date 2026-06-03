@@ -1,0 +1,49 @@
+import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
+
+[cursor.style]
+blinking = "Off"
+shape = "Beam"
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "CommitMono Nerd Font"
+style = "Regular"
+[font.bold]
+family = "CommitMono Nerd Font"
+style = "Bold"
+[font.italic]
+family = "CommitMono Nerd Font"
+style = "Italic"
+[font.bold_italic]
+family = "CommitMono Nerd Font"
+style = "Bold Italic"
+
+[keyboard]
+bindings = [
+  { key = "L", mods = "Control", mode = "~Vi|~Search", action = "ClearHistory" },
+  { key = "Space", mods = "Control", mode = "~Search", action = "ToggleViMode" },
+  { key = "Return", mods = "Shift", chars = "\u001b\r" },
+]
+
+[mouse]
+hide_when_typing = true
+bindings = [
+  { mouse = "Right", action = "Copy" },
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "None"
+dynamic_title = true
+opacity = 1.0
+blur = true
+title = "Alacritty"
+option_as_alt = "Both"
+
+[window.padding]
+x = 20
+y = 20

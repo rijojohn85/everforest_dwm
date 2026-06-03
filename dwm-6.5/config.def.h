@@ -112,6 +112,7 @@ static const char *dmenucmd[] = {
 static const char *termcmd[] = {"alacritty", NULL};
 static const char *browsercmd[] = {"firefox", NULL};
 static const char *zathuracmd[] = {"zathura", NULL};
+static const char *clipcmd[] = {"copyq", "menu", NULL};
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_a, spawn,
@@ -121,6 +122,7 @@ static const Key keys[] = {
 
     { Mod4Mask|ShiftMask, XK_s, spawn, SHCMD("flameshot gui") },
     {MODKEY, XK_o, spawn, {.v = zathuracmd}},
+    {Mod4Mask, XK_v, spawn, {.v = clipcmd}},
     {MODKEY, XK_F11, spawn, {.v = voldowncmd}},
     {MODKEY, XK_F10, spawn, {.v = mutecmd}},
     {MODKEY, XK_F12, spawn, {.v = volupcmd}},

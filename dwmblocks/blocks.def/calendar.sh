@@ -1,3 +1,3 @@
-#!/bin/bash
-ICON=""
-printf "$ICON%s" "$(date '+%a, %b %d, %R')"
+#!/bin/sh
+ICON=$(printf '\357\201\263')
+printf "%s %s" "$ICON" "$(date '+%a, %b %d, %R')"

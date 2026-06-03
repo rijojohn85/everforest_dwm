@@ -1,10 +1,8 @@
 alias  l='eza -l  --icons'
-alias ls='eza -1  --icons'
 alias ll='eza -la --icons'
 alias ld='eza -lD --icons'
-alias cd='z'
-alias cd..="z .."
-alias cd2="z../.."
+alias cd..="cd .."
+alias cd2="cd ../.."
 
 alias in='sudo pacman -S' # install package
 alias un='sudo pacman -Rns' # uninstall package
@@ -17,5 +15,17 @@ alias vc='code'  # gui code editor
 alias reflect='sudo reflector -c "India" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist'
 alias ssh-arch-desktop='ssh rijojohn@192.168.29.65'
 alias ssh-arch-laptop='ssh rijojohn@192.168.29.2'
-alias ssh-mac-desktop='ssh rijojohn@192.168.29.190'
 alias hx='helix'
+# ---- Eza (better ls) -----
+
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias c=clear
+alias vm-start-1="vmcli Power Start ~/VirtualMachines/vm-server-1.vmwarevm/vm-server-1.vmx"
+alias vm-stop-1="vmcli Power Stop -o configDefault ~/VirtualMachines/vm-server-1.vmwarevm/vm-server-1.vmx"
+alias vm-start-2="vmcli Power Start ~/VirtualMachines/vm-server-2.vmwarevm/vm-server-2.vmx"
+alias vm-stop-2="vmcli Power Stop -o configDefault ~/VirtualMachines/vm-server-2.vmwarevm/vm-server-2.vmx"
+alias vm-start-3="vmcli Power Start ~/VirtualMachines/vm-server-3.vmwarevm/vm-server-3.vmx"
+alias vm-stop-3="vmcli Power Stop -o configDefault ~/VirtualMachines/vm-server-3.vmwarevm/vm-server-3.vmx"
+alias cfg-alacritty='nvim ~/.config/alacritty/alacritty.toml'
+alias k="kubectl"
+alias act="source .venv/bin/activate"

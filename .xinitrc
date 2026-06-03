@@ -1,58 +1,57 @@
 #!/bin/sh
 
+echo "xinitrc executed at $(date)" >>~/xinitrc.log
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
-# merge in defaults and keymaps
+# Merge system/user X resources
+[ -f "$sysresources" ] && xrdb -merge "$sysresources"
+[ -f "$sysmodmap" ] && xmodmap "$sysmodmap"
+[ -f "$userresources" ] && xrdb -merge "$userresources"
+[ -f "$usermodmap" ] && xmodmap "$usermodmap"
 
-if [ -f $sysresources ]; then
-
-  xrdb -merge $sysresources
-
-fi
-
-if [ -f $sysmodmap ]; then
-  xmodmap $sysmodmap
-fi
-
-if [ -f "$userresources" ]; then
-
-  xrdb -merge "$userresources"
-
-fi
-
-if [ -f "$usermodmap" ]; then
-  xmodmap "$usermodmap"
-fi
-
-# start some nice programs
-
+# Load scripts in /etc/X11/xinit/xinitrc.d
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
     [ -x "$f" ] && . "$f"
   done
   unset f
 fi
-#keyboard layout
-#setxkbmap ch &
 
-#Display Resolution
-xrandr --output HDMI-2 --primary --mode 1920x1080 --output HDMI-1 --mode 1920x1080 --rotate right --right-of HDMI-2 &
-while true; do
-  xsetroot -name "󰱓 $(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p') |  $(date +"%e-%b-%g %R")"
-  sleep 60s
-done &
-#Compositor
+# -------------------------------------------------
+# Display configuration  (EDIT PER LAPTOP: output names / resolutions)
+# -------------------------------------------------
+# DP-2 (4K) primary at the bottom; HDMI-1 (ultrawide) directly above it,
+# horizontally centered ((3840-3440)/2 = 200); laptop panel eDP-1 is off.
+xrandr \
+  --output eDP-1 --off \
+  --output DP-2 --primary --mode 3840x2160 --pos 0x1440 \
+  --output HDMI-1 --mode 3440x1440 --pos 200x0
+xset s off
+xset s noblank
+xset -dpms
+
+# -------------------------------------------------
+# Startup utilities
+# -------------------------------------------------
+# Refresh wallpaper (after xrandr so it matches the final geometry)
+nitrogen --restore &
+
+# Compositor
 picom --config ~/.config/picom/picom.conf &
-#dwm status
-# dwmstatus 2>&1 >/dev/null &
-# exec dwmblocks &
-# exec rsblocks &
-##nitrogen
-nitrogen --restore
-#loop
+
+dunst &
+copyq &
+
+# -------------------------------------------------
+# Status bar (dwmblocks + signal-driven volume updates)
+# -------------------------------------------------
+dwmblocks &
+~/everforest_dwm/dwmblocks/daemons/pulse_daemon.sh &
+
+# -------------------------------------------------
+# Launch DWM
+# -------------------------------------------------
 exec ~/bin/startdwm
-#Execute DWM
-exec dwm

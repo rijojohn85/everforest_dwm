@@ -1,0 +1,18 @@
+# Allow specific USB devices to wake the system from suspend (S3).
+# Re-applied on every boot/hotplug (ACTION=="add") so wakeup survives reboots
+# and re-docking; raw /sys/.../power/wakeup writes do not persist.
+#
+# NOTE: the idVendor/idProduct values below are SPECIFIC TO THIS MACHINE'S
+# peripherals. On another laptop, find your devices' IDs with:
+#     lsusb
+#     for d in /sys/bus/usb/devices/*/; do \
+#       printf '%s %s:%s\n' "$(cat "$d/product" 2>/dev/null)" \
+#       "$(cat "$d/idVendor" 2>/dev/null)" "$(cat "$d/idProduct" 2>/dev/null)"; done
+# then edit the lines below to match.
+
+# Keychron K2 Max (keyboard)
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="3434", ATTR{idProduct}=="0a20", ATTR{power/wakeup}="enabled"
+# Keychron Link (receiver)
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="3434", ATTR{idProduct}=="d030", ATTR{power/wakeup}="enabled"
+# Wireless mouse dongle
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="05ac", ATTR{idProduct}=="024f", ATTR{power/wakeup}="enabled"

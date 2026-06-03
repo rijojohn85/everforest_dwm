@@ -1,0 +1,30 @@
+[global]
+    font = JetBrainsMono 10
+    frame_width = 2
+    separator_height = 2
+    padding = 6
+    horizontal_padding = 10
+    line_height = 0
+    corner_radius = 6
+    transparency = 10
+    follow = mouse
+    monitor = 0
+    offset = 10x40
+    width = 300
+    alignment = left
+    format = "%s\n%b"
+
+[urgency_low]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    frame_color = "#585b70"
+
+[urgency_normal]
+    background = "#1e1e2e"
+    foreground = "#f9e2af"
+    frame_color = "#f9e2af"
+
+[urgency_critical]
+    background = "#1e1e2e"
+    foreground = "#f38ba8"
+    frame_color = "#f38ba8"

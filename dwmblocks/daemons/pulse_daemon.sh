@@ -4,6 +4,6 @@
 pactl subscribe |
     while IFS='' read -r output ; do
         case "$output" in
-            *" sink "*) sigdwmblocks 1 ;;
+            *" sink "*) sigdwmblocks 2 ;;
         esac
     done

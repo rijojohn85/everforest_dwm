@@ -173,6 +173,13 @@ setup_udev() {
 	echo "   NOTE: edit udev/90-usb-wakeup.rules with this laptop's keyboard/mouse VID:PID."
 }
 
+setup_sleep_hooks() {
+	echo ">> Installing systemd sleep hooks"
+	# Must go to /usr/lib/systemd/system-sleep/ — systemd-sleep only scans that dir.
+	link_system system-sleep/50-keychron-rebind.sh /usr/lib/systemd/system-sleep/50-keychron-rebind.sh
+	sudo chmod +x /usr/lib/systemd/system-sleep/50-keychron-rebind.sh
+}
+
 set_shell() {
 	if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$(command -v zsh)" ]; then
 		echo ">> Setting default shell to zsh"
@@ -187,6 +194,7 @@ main() {
 	deploy_links
 	setup_keyd
 	setup_udev
+	setup_sleep_hooks
 	set_shell
 	echo
 	echo "Done. Log out and startx."

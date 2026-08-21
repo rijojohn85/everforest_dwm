@@ -34,7 +34,9 @@ arch_pkgs=(
 	zsh-autosuggestions zsh-syntax-highlighting
 	i3lock imagemagick
 	lazygit starship keyd reflector
-	base-devel libx11 libxft libxinerama fontconfig
+	base-devel libx11 libxft libxinerama fontconfig pkgconf
+	alacritty dunst copyq kdeconnect playerctl alsa-utils
+	pipewire pipewire-pulse zathura zathura-pdf-mupdf htop
 )
 debian_pkgs=(
 	xorg xinit x11-xserver-utils
@@ -42,7 +44,9 @@ debian_pkgs=(
 	fzf fd-find ripgrep eza bat zoxide thefuck xclip zsh
 	zsh-autosuggestions zsh-syntax-highlighting
 	i3lock imagemagick
-	build-essential libx11-dev libxft-dev libxinerama-dev libxext-dev fontconfig
+	build-essential libx11-dev libxft-dev libxinerama-dev libxext-dev fontconfig pkg-config
+	alacritty dunst copyq kdeconnect playerctl alsa-utils
+	pipewire pipewire-pulse zathura zathura-pdf-poppler htop
 )
 
 install_packages() {
